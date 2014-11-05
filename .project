@@ -8,4 +8,11 @@
 	</buildSpec>
 	<natures>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>web-app/example</name>
+			<type>2</type>
+			<location>/uio/hume/student-u26/solverj/høst2014/inf5750/example</location>
+		</link>
+	</linkedResources>
 </projectDescription>
