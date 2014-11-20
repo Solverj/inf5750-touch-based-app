@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="inf5750-upload">
+    <serverData>
+      <paths name="inf5750-upload">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/usr/share/tomcat/webapps/ROOT/apps/app3-jacobbi" local="$PROJECT_DIR$" web="/apps/app3-jacobbi" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/manifest.webapp" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
