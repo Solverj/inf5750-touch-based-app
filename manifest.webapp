@@ -1,12 +1,12 @@
 {
 	"version":"1.0",
-	"name":"App-jacobbi",
+	"name":"App-sondretw",
 	"launch_path":"index.html",
 	"installs_allowed_from":[
 		"*"
 	],
 	"default_locale":"en",
-	"description":"touch-based-jacobbi",
+	"description":"touch-based-messaging",
 	"icons":{
 		"16":null,
 		"48":"/img/icon-48.png",
@@ -14,9 +14,9 @@
 	},
 	"developer":{
 	"url":"http://dhis2.org/",
-	"name":"Jacob Biørn",
+	"name":"null",
 	"company":null,
-	"email":"lars@roland.bz"
+	"email":"null"
 	},
 	"activities":{
 		"dhis":{
