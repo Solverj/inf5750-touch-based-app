@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
   <component name="PublishConfigData" serverName="inf5750-upload">
     <serverData>
       <paths name="inf5750-upload">
@@ -13,5 +14,18 @@
         </serverdata>
       </paths>
     </serverData>
+=======
+  <component name="PublishConfigData" autoUpload="Always" serverName="DHIS2-Project">
+    <serverData>
+      <paths name="DHIS2-Project">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/usr/share/tomcat/webapps/ROOT/apps/app-sondretw" local="$PROJECT_DIR$" web="/apps/app-sondretw" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+>>>>>>> origin/master
   </component>
 </project>
