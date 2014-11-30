@@ -1,0 +1,24 @@
+<div ng-app="" ng-controller="messageController">
+
+    <h3>Subject: {{subject}}</h3>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Sender:</th>
+            <th>Message</th>
+        </tr>
+        <tr ng-repeat="text in inboxList">
+            <td>{{text.name}}</td><td>{{text.text}}</td>
+        </tr>
+    </table>
+
+    <form name="replyForm" ng-submit="reply()">
+
+        <input type="text" placeholder="reply-message" ng-model="replyText">
+        <input type="submit">
+
+    </form>
+
+    <div ng-bind="replyText"></div>
+
+</div>
