@@ -1,24 +1,27 @@
-<div ng-app="" ng-controller="messageController">
+<div ng-app="view message" ng-controller="messageController">
 
     <h3>Subject: {{subject}}</h3>
 
     <table class="table table-striped">
         <tr>
-            <th>Sender:</th>
+            <th>Sendt:</th>
             <th>Message</th>
         </tr>
-        <tr ng-repeat="text in inboxList">
-            <td>{{text.name}}</td><td>{{text.text}}</td>
+        <tr ng-repeat="id in inboxList">
+
+            <td>{{id.id.id}}</td><td id="contentTd" class="tableMessage">{{id.id.name}}</td>
         </tr>
     </table>
 
-    <form name="replyForm" ng-submit="reply()">
+    <form ng-submit="reply()" ng-controller="messageController">
 
-        <input type="text" placeholder="reply-message" ng-model="replyText">
-        <input type="submit">
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="text">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="submit" >Reply!</button>
+            </span>
+        </div>
 
     </form>
-
-    <div ng-bind="replyText"></div>
 
 </div>

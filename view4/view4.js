@@ -3,7 +3,7 @@
 
 angular.module('myApp.view4', ['ngRoute'])
 
-    .config(['$routeProvider', function($routeProvider) {
+    .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/view4/:id', {
             templateUrl: 'view4/view4.html',
             controller: 'View4Ctrl'
@@ -11,56 +11,54 @@ angular.module('myApp.view4', ['ngRoute'])
 
         // $locationProvider.html5Mode(true);
     }])
-    .controller('View4Ctrl', ['$scope', '$routeParams', function($scope, $routeParams) {
+    .controller('View4Ctrl', ['$http', '$scope', '$routeParams', function ($http, $scope, $routeParams) {
         $scope.messageId = ($routeParams.id);
+        $http.get(dhi + '/api/me')
+            .success(function (response) {
+                $scope.me = response;
+            });
 
     }]);
 
-function messageController($scope, $http) {
+function messageController($scope, $http,$route) {
 
     $scope.messagrURL = dhi + "/api/messageConversations/" + $scope.messageId;
-    $scope.replyText = "";
-
-    $http.get(dhi + '/api/me/').success(function(result){
-       $scope.me = result;
-    });
-
-    $http.get($scope.messagrURL).success(function(result) {
-        $scope.messageObject = result;
+    $http.get($scope.messagrURL).success(function (result) {
+        $scope.replyText = "";
         $scope.inboxList = [];
+        $scope.json = result;
         // $scope.messageUserList = [];
         $scope.messageThread = result.messages;
         $scope.subject = result.subject;
         $scope.people = result.userMessages;
-        for(var i = 0; i < result.userMessages.length; i++){
-            $scope.inboxList.push({"name": $scope.people[i].user.name,text:$scope.messageThread[i].name });
+        for (var i = 0; i < result.messages.length; i++) {
+            console.log(result.messages[i]);
+            $scope.inboxList.push({"id": result.messages[i]});
         }
-        /* for (var i = 0; i < result.userMessages.length; i++) {
-         $scope.messageUserList.push({"id": result.userMessages[i].user.id});
-         lastSender":{"id":"xE7jOejl9FI","name":"John Traore"
-         }*/
+
     });
 
-    $scope.reply = function(){
-        console.log("C");
-        $scope.messageObject.lastUpdated = $scope.messageObject.lastUpdated;
-        $scope.messageObject.lastSender = {'id': $scope.me.id, 'name': $scope.me.name};
-        $scope.messageObject.messages.push({"name":$scope.replyText});
-        $scope.messageObject.userMessages.push({"user":{"id": $scope.me.id, "name": $scope.me.name}});
-        console.log(JSON.stringify($scope.messageObject));
-        var send = $http({
-            method: 'post',
-            url: dhi + '/api/messageConversations/' + $scope.messageId,
-            contentType: 'application/json',
-            data: JSON.stringify($scope.messageObject),
-            async: false
-        }).success(function () {
-            console.log('ok');
-        }).error(function (data, status, headers, config) {
-            console.log(data, status, headers, config);
-        });
-        $scope.list = [];
-    };
+    $scope.reply = function () {
+        if($scope.text) {
+            var urlTo = dhi + '/api/messageConversations/' + $scope.messageId;
+            $http({
+                method: 'post',
+                url: urlTo,
+                contentType: 'application/json',
+                data: JSON.stringify($scope.text),
+                async: false
+            }).success(function () {
+                console.log('well fk yeah?');
+                $route.reload();
+            }).error(function (data, status, headers, config) {
+                console.log(data, status, headers, config);
+            });
+            $scope.text = '';
+
+        }
+
+    }
 }
+
 
 //http://inf5750-30.uio.no/api/messageConversations/id

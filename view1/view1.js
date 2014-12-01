@@ -14,7 +14,14 @@ angular.module('myApp.view1', ['ngRoute'])
 }]);
 
 function retriveUserConversations($scope, $http) {
+
   $http.get(dhi + '/api/currentUser/inbox/messageConversations').success(function(response) {
         $scope.messageList = response;
       });
+
+    $scope.showMessage = function(message){
+        $location.path("#/view4/" + message.id);
+    }
+
+    $scope.header = 'Inbox';
 }
