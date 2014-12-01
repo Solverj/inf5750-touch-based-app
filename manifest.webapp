@@ -1,12 +1,12 @@
 {
 	"version":"1.0",
-	"name":"App-jacobbi",
+	"name":"App-solverj",
 	"launch_path":"index.html",
 	"installs_allowed_from":[
 		"*"
 	],
 	"default_locale":"en",
-	"description":"touch-based-jacobbi",
+	"description":"touch-based-solverj",
 	"icons":{
 		"16":null,
 		"48":"/img/icon-48.png",
@@ -14,7 +14,7 @@
 	},
 	"developer":{
 	"url":"http://dhis2.org/",
-	"name":"Jacob Biørn",
+	"name":"ØJSS",
 	"company":null,
 	"email":"lars@roland.bz"
 	},

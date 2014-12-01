@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="inf5750-upload">
+  <component name="PublishConfigData" serverName="inf5750-30">
     <serverData>
-      <paths name="inf5750-upload">
+      <paths name="inf5750-30">
         <serverdata>
           <mappings>
-            <mapping deploy="/usr/share/tomcat/webapps/ROOT/apps/app3-jacobbi" local="$PROJECT_DIR$" web="/apps/app3-jacobbi" />
+            <mapping deploy="/usr/share/tomcat/webapps/ROOT/apps/solverj-app" local="$PROJECT_DIR$" web="/" />
           </mappings>
-          <excludedPaths>
-            <excludedPath local="true" path="$PROJECT_DIR$/manifest.webapp" />
-          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>

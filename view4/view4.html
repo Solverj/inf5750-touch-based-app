@@ -1,1 +1,23 @@
-<p>This is the partial for view 4.</p>
+<div ng-app="view message" ng-controller="messageController">
+
+    <h3>Subject: {{subject}}</h3>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Sendt:</th>
+            <th>Message</th>
+        </tr>
+        <tr ng-repeat="id in inboxList">
+
+            <td>{{id.id.id}}</td><td>{{id.id.name}}</td>
+        </tr>
+    </table>
+
+    <form ng-submit="reply()" ng-controller="messageController">
+
+        <textarea class="form-control" rows="5" ng-model="text" id="text"></textarea>
+        <input type="submit" id="reply" value="reply"/>
+
+    </form>
+
+</div>
