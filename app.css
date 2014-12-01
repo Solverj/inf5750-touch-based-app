@@ -28,3 +28,10 @@
   content: "";
   padding: 0;
 }
+.message_unread{
+  font-weight: bold;
+}
+.message_read{
+  font-weight: lighter;
+  color: #444444;
+}
