@@ -1,28 +1,26 @@
-<<<<<<< HEAD
-<div ng-class="container"
-    <div ng-app="" ng-controller="retriveUserConversations">
-
-        <table>
-            <tr ng-repeat="message in messageList">
-                <td><a href="#/view4/{{message.id}}">{{ message.subject }}</a></td>
-                <td>{{ message.lastSenderFirstname + " " + message.lastSenderSurname}}</td>
-                <td> <img ng-src="img/readMessage.png" ng-show="message.read == true" width="30">
-=======
 <div ng-class="container">
-    <div ng-app="" ng-controller="retriveUserConversations" class="table-responsive">
-
+    <div ng-app="" ng-controller="retrieveUserConversations" class="table-responsive">
+    <h2>Inbox</h2><br />
         <table class="table table-striped">
+
             <tr><th>Subject</th><th>From</th><th>Read</th></tr>
+
             <tr ng-repeat="message in messageList">
-                <td ><a href="#/view4/{{message.id}}">{{ message.subject }}</a></td>
+                <td ><a href="#/view4/{{message.id}}" >
+                    <span ng-show="message.read == false" class="message_unread">{{ message.subject }}</span>
+                    <span ng-show="message.read == true" class="message_read">{{ message.subject }}</span>
+                </a></td>
                 <td>{{ message.lastSenderFirstname + " " + message.lastSenderSurname}}</td>
                 <td>
                     <img ng-src="img/readMessage.png" ng-show="message.read == true" width="30">
->>>>>>> origin/master
                     <img ng-src="img/unreadyMessage.png" ng-show="message.read == false" width="25">
                 </td>
             </tr>
         </table>
+
+        <div ng-controller="View1Ctrl" id="messageView">
+            <div ng-repeat="message in messageThread">{{message}}</div>
+        </div>
     </div>
 </div>
 

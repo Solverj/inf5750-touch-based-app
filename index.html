@@ -24,18 +24,14 @@
     var xhReq = new XMLHttpRequest();
     xhReq.open("GET", "manifest.webapp", false);
     xhReq.send(null);
+    var online = xhReq.status >= 200 && (xhReq.status < 300 || xhReq.status === 304);
+    console.log(online);
     var serverResponse = JSON.parse(xhReq.responseText);
     var dhi = serverResponse.activities.dhis.href;
-</script>
-<<<<<<< HEAD
-<body>
 
-<ul class="menu">
-    <li><a href="#/view1">Inbox</a></li>
-    <li><a href="#/view2">Outbox</a></li>
-    <li><a href="#/view3">New message</a></li>
-</ul>
-=======
+    var idbSupported = false;
+    var db;
+</script>
 
 <body>
 <nav class="navbar navbar-default" role="navigation">
@@ -60,34 +56,32 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
->>>>>>> origin/master
 
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
     your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<<<<<<< HEAD
-<div class="container "ng-view></div>
-=======
 <div class="container" ng-view></div>
->>>>>>> origin/master
+
 
 <!--<div>Angular seed app: v<span app-version></span></div> -->
 
 
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="app.js"></script>
 <script src="view1/view1.js"></script>
 <script src="view2/view2.js"></script>
 <script src="view3/view3.js"></script>
+<script src="db.js"></script>
 <script src="view4/view4.js"></script>
 <script src="components/version/version.js"></script>
 <script src="components/version/version-directive.js"></script>
 <script src="components/version/interpolate-filter.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src=""></script>
 </body>
 </html>
