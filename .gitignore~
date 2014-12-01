@@ -1,2 +1,3 @@
-.idea/
-angular_seed/
+.idea
+angular-seed
+manifest.webapp
