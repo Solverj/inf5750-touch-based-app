@@ -26,6 +26,17 @@ function messageController($scope, $http,$route) {
 
     $http({
         method: 'get',
+        url: $scope.messagrURL,
+        contentType: 'application/json',
+        async: false
+    }).success(function (result) {
+        $scope.subject = result.subject;
+        $scope.people = result.userMessages;
+        console.log($scope.people);
+    });
+
+    $http({
+        method: 'get',
         url: $scope.messagrURL+'/messages',
         contentType: 'application/json',
         async: false
@@ -39,10 +50,24 @@ function messageController($scope, $http,$route) {
         $scope.subject = result.subject;
         $scope.people = result.userMessages;
         for (var i = 0; i < result.messages.length; i++) {
-            console.log(result.messages[i]);
             $scope.inboxList.push({"id": result.messages[i]});
         }
 
+    });
+
+    $scope.mesageIdList=[];
+    $scope.mesageIdList.push($scope.messageId);
+    $http({
+        method: 'post',
+        url: dhi + "/api/messageConversations/read",
+        contentType: 'application/json',
+        data: JSON.stringify($scope.mesageIdList),
+        async: false
+    }).success(function(){
+
+    }).error(function (data, status, headers, config) {
+        console.log($scope.messageId);
+            console.log(data, status, headers, config);
     });
 
     $scope.reply = function () {

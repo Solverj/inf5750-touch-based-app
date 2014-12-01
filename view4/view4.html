@@ -1,23 +1,34 @@
 <div ng-app="view message" ng-controller="messageController">
 
-    <h3>Subject: {{subject}}</h3>
-
+    <h4>Subject: {{subject}}</h4>
     <table class="table table-striped">
-        <tr>
-            <th>Sendt:</th>
-            <th>Message</th>
-        </tr>
-        <tr ng-repeat="id in inboxList">
+        <!--<tr><th colspan="2">Subject: {{subject}}</th></tr>-->
+        <thead>
+            <tr>
+                <th class="col-md-3 col-xs-4">Sender</th>
+                <th class="col-md-9 col-xm-8">Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="id in inboxList">
+                <td>{{id.id.sender.name}}</td><td>{{id.id.name}}</td>
+            </tr>
+        </tbody>
 
-            <td>{{id.id.sender.name}}</td><td>{{id.id.name}}</td>
-        </tr>
     </table>
+    <div class="form-group">
 
-    <form ng-submit="reply()" ng-controller="messageController">
+        <p class="small"><b>Reply to: </b>
+            <span ng-repeat="person in people"> {{person.user.name}}, </span>
+        </p>
 
-        <textarea class="form-control" rows="5" ng-model="text" id="text"></textarea>
-        <input type="submit" id="reply" value="reply"/>
+        <form ng-submit="reply()" ng-controller="messageController">
 
-    </form>
+            <textarea class="form-control" rows="3" ng-model="text" id="text"></textarea>
+            <button class="btn btn-primary" type="submit" id="reply" > Reply </button>
+
+        </form>
+    </div>
+
 
 </div>
