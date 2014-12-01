@@ -23,7 +23,14 @@ angular.module('myApp.view4', ['ngRoute'])
 function messageController($scope, $http,$route) {
 
     $scope.messagrURL = dhi + "/api/messageConversations/" + $scope.messageId;
-    $http.get($scope.messagrURL).success(function (result) {
+
+    $http({
+        method: 'get',
+        url: $scope.messagrURL+'/messages',
+        contentType: 'application/json',
+        async: false
+        }).success(function (result) {
+
         $scope.replyText = "";
         $scope.inboxList = [];
         $scope.json = result;

@@ -2,34 +2,23 @@
 
 
     <div ng-class="container">
-
         <h2> New message</h2> <!-- style this -->
+        <form ng-submit="send()" ng-controller="View3Ctrl">
+            <label for="to">To:</label>
+            <input type="name" class="form-control"
+                   id="to" placeholder="Enter to" ng-model="to"
+                   requred>
 
-        <form role="sendForm">
+            <label for="to">From:</label>
 
-            <div class="form-group">
-                <label for="to">To:</label>
-                <input type="name" class="form-control" id="to" placeholder="Enter to" requred>
+            <div ng-app="" ng-controller="getMe">
+                <p class="form-control-static">{{me.name}}</p>
             </div>
-
-            <div class="form-group">
-
-                <label for="to">From:</label>
-                    <div ng-app="" ng-controller="getMe">
-                        <p class="form-control-static">{{email.name}}</p>
-                </div>
-
-            </div>
-            <div class="form-group">
-                <label for="subject">Subject:</label>
-                <input type="name" class="form-control"
-                       id="subject" placeholder="Enter subject"
-                        >
-
-                <div class="form-group">
-                    <textarea class="form-control" rows="5" id="text"></textarea>
-                </div>
-                <button type="submit" class="btn btn-default">Send</button>
+            <label for="subject">Subject:</label>
+            <input type="name" class="form-control" ng-model="subject"
+                   id="subject" placeholder="Enter subject">
+           <textarea class="form-control" rows="5" ng-model="text" id="text"></textarea>
+            <input type="submit" id="send" value="send"/>
         </form>
     </div>
 

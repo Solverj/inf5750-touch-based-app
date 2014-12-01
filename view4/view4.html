@@ -10,10 +10,12 @@
         <tr ng-repeat="id in inboxList">
 
             <td>{{id.id.id}}</td><td id="contentTd" class="tableMessage">{{id.id.name}}</td>
+
         </tr>
     </table>
 
     <form ng-submit="reply()" ng-controller="messageController">
+
 
         <div class="input-group">
             <input type="text" class="form-control" ng-model="text">
@@ -21,6 +23,7 @@
                 <button class="btn btn-default" type="submit" >Reply!</button>
             </span>
         </div>
+
 
     </form>
 
