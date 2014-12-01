@@ -35,3 +35,12 @@
   font-weight: lighter;
   color: #444444;
 }
+
+.tableMessage{
+  font-size: 14px;
+  word-break: normal;
+  word-wrap: break-word;
+
+}
+
+

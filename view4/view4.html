@@ -9,14 +9,25 @@
         </tr>
         <tr ng-repeat="id in inboxList">
 
+<<<<<<< HEAD
             <td>{{id.id.sender.name}}</td><td>{{id.id.name}}</td>
+=======
+            <td>{{id.id.id}}</td><td id="contentTd" class="tableMessage">{{id.id.name}}</td>
+
+>>>>>>> 9329a41f250f5cbc5e84ee4c367c255e82fdb308
         </tr>
     </table>
 
     <form ng-submit="reply()" ng-controller="messageController">
 
-        <textarea class="form-control" rows="5" ng-model="text" id="text"></textarea>
-        <input type="submit" id="reply" value="reply"/>
+
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="text">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="submit" >Reply!</button>
+            </span>
+        </div>
+
 
     </form>
 
