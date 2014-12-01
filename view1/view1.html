@@ -10,7 +10,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="message in messageList" ng-click="showMessage(message.id)">
+            <tr ng-repeat="message in messageList">
                 <td>
 
                     <div class="dropdown" ng-controller="actionController">
@@ -37,7 +37,7 @@
                 </td>
 
 
-                <td>
+                <td ng-click="showMessage(message.id)">
                     <a href="#/view4/{{message.id}}" >
                         <span ng-show="message.read == false" class="message_unread">{{ message.subject.substr(0, 26)}}
                             <span ng-show="message.subject.length > 26">...</span>
