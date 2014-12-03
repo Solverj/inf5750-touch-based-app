@@ -1,5 +1,5 @@
 <div ng-class="container">
-    <div ng-app="" ng-controller="retrieveUserConversations" class="table-responsive">
+    <div id="inbox" ng-app="myApp.view1" ng-controller="View1Ctrl" class="table-responsive">
     <h2>Inbox</h2><br />
         <table class="table table-striped">
 
@@ -7,8 +7,8 @@
 
             <tr ng-repeat="message in messageList">
                 <td ><a href="#/view4/{{message.id}}" >
-                    <span ng-show="message.read == false" class="message_unread">{{ message.subject }}</span>
-                    <span ng-show="message.read == true" class="message_read">{{ message.subject }}</span>
+                    <span ng-show="message.read === false" class="message_unread">{{ message.subject }}</span>
+                    <span ng-show="message.read === true" class="message_read">{{ message.subject }}</span>
                 </a></td>
                 <td>{{ message.lastSenderFirstname + " " + message.lastSenderSurname}}</td>
                 <td>
