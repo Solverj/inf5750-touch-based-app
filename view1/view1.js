@@ -1,35 +1,54 @@
 'use strict';
 
-angular.module('myApp.view1', ['ngRoute'])
+var view1App = angular.module('myApp.view1', ['ngRoute', 'indexedDB_messageapp']);
 
-.config(['$routeProvider', function($routeProvider) {
+view1App.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/view1', {
     templateUrl: 'view1/view1.html',
     controller: 'View1Ctrl'
   });
-}])
-
-.controller('View1Ctrl', [function() {
-
 }]);
 
-function retriveUserConversations($scope, $http, $location) {
+view1App.controller('View1Ctrl', function($scope, $window, dbService, $http) {
+   // $scope.messageList = retrieveUserConversations.getMessages;
+/*    $http.get(dhi + '/api/currentUser/inbox/messageConversations').success(function (response) {
+        addAllMessages(response);
+    });*/
+    var vm = this;
+    vm.todos = [];
+    vm.user;
 
-    $scope.showMessage  = function(id){
-        $location.url('/view4/' + id);
+    vm.refreshList = function () {
+        dbService.getAllMessages().then(function (data) {
+            vm.todos = data;
+            $scope.messageList = vm.todos;
+
+            $http.get(dhi + '/api/me')
+                .success(function (response) {
+                    $scope.me = response.name;
+                });
+
+        }, function (err) {
+            console.log("Error in getting database data.");
+        });
     };
 
-    $http.get(dhi + '/api/currentUser/inbox/messageConversations').success(function(response) {
-        $scope.messageList = response;
-      });
+    function init() {
+        dbService.open().then(function () {
+            //if this is success full we should "refresh" our database with the server.
+            $http.get(dhi + '/api/currentUser/inbox/messageConversations').success(function (response) {
+                dbService.clearDatabase(response);
+                dbService.addAllMessages(response);
+            });
 
-    $http.get(dhi + '/api/me')
-        .success(function (response) {
-            $scope.me = response.name;
+            //And then retrieve from the database. see above.
+           vm.refreshList();
         });
-}
+    }
+    init();
+});
 
-function actionController($scope, $http, $route){
+function actionController($scope, $http, $route, dbService){
 
     $scope.markAsRead = function(id){
         if(id) {
@@ -45,6 +64,12 @@ function actionController($scope, $http, $route){
                 $route.reload();
             }).error(function (data, status, headers, config) {
                 console.log(data, status, headers, config);
+
+                /* we are offline. Use database. */
+                var a = dbService.getMessage(id);
+                a.read = true;
+                dbService.addMessage(a);
+                $route.reload();
             });
         }
     };
@@ -61,8 +86,15 @@ function actionController($scope, $http, $route){
                 async: false
             }).success(function () {
                 $route.reload();
+
             }).error(function (data, status, headers, config) {
                 console.log(data, status, headers, config);
+
+                /*Using database instead of online.*/
+                var a = dbService.getMessage(id);
+                a.read = false;
+                dbService.addMessage(a);
+                $route.reload();
             });
         }
     };
@@ -78,8 +110,13 @@ function actionController($scope, $http, $route){
                 async: false
             }).success(function(){
                 $route.reload();
+
+
             }).error(function (data, status, headers, config) {
                 console.log(data, status, headers, config);
+                /* offline, use database*/
+                dbService.deleteMessageByID(id);
+                $route.reload();
             });
         }
     };
