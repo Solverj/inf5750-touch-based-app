@@ -35,4 +35,16 @@
   font-weight: lighter;
   color: #444444;
 }
+table{
+  overflow: visible;
+}
+.container-full{
+  max-width:600px;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 120%;
+}
 
+.dropdown{
+  position: fixed;
+}

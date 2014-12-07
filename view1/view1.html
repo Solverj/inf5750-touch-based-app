@@ -6,7 +6,6 @@
             <tr>
                 <th class="col-md-3 col-xs-1">Actions</th>
                 <th class="col-md-6 col-xs-8">Subject</th>
-                <th class="col-md-3 col-xs-3">Sender</th>
             </tr>
             </thead>
             <tbody>
@@ -39,20 +38,15 @@
 
                 <td ng-click="showMessage(message.id)">
                     <a href="#/view4/{{message.id}}" >
-                        <span ng-show="message.read == false" class="message_unread">{{ message.subject.substr(0, 26)}}
-                            <span ng-show="message.subject.length > 26">...</span>
-                        </span>
-                        <span ng-show="message.read == true" class="message_read">{{ message.subject.substr(0, 26)}}
-                            <span ng-show="message.subject.length > 26">...</span>
-                        </span>
+                        <span ng-hide="(message.lastSenderFirstname + ' ' + message.lastSenderSurname) === me">{{ message.lastSenderFirstname + " " + message.lastSenderSurname}}</span>
+                        <span ng-show="(message.lastSenderFirstname + ' ' + message.lastSenderSurname) === me"> Me </span>
+                        <br/>
+                        <span ng-show="message.read == false" class="message_unread">{{ message.subject}}</span>
+                        <span ng-show="message.read == true" class="message_read">{{ message.subject}}</span>
                     </a>
 
                 </td>
 
-                <td>
-                    <span ng-hide="(message.lastSenderFirstname + ' ' + message.lastSenderSurname) === me">{{ message.lastSenderFirstname + " " + message.lastSenderSurname}}</span>
-                    <span ng-show="(message.lastSenderFirstname + ' ' + message.lastSenderSurname) === me"> Me </span>
-                </td>
 
             </tr>
             </tbody>
