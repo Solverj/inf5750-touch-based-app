@@ -7,7 +7,7 @@ dbApp.factory('dbService', function($window, $q) {
 
     var open = function() {
         var deferred = $q.defer();
-        var version = 8;
+        var version = 15;
         var openRequest = indexedDB.open("dhis_messageapp_database", version);
 
 
@@ -68,7 +68,7 @@ dbApp.factory('dbService', function($window, $q) {
         return deferred.promise;
     };
 
-    var addMessage = function(_Message) {
+    var addMessage = function(_Message, _messageConversation, _messageData) {
 
         var deferred = $q.defer();
 
@@ -101,7 +101,14 @@ dbApp.factory('dbService', function($window, $q) {
                     update:_Message.access.update,
                     delete:_Message.access.delete
                 },
-                displayName: _Message.displayName
+                displayName: _Message.displayName,
+                messageConversation: {
+                    subject: _messageConversation.subject,
+                    userMessages: _messageConversation.userMessages,
+                    messages: _messageConversation.messages,
+                    messageData: _messageData.messages
+                }
+
             };
             if(_Message.id === null ) {
                 deferred.reject("Input is null");
@@ -127,6 +134,7 @@ dbApp.factory('dbService', function($window, $q) {
         return deferred.promise;
     };
 
+
     var getMessage = function(_ID) {
         var deferred = $q.defer();
 
@@ -141,7 +149,7 @@ dbApp.factory('dbService', function($window, $q) {
 
             ob.onsuccess = function (e) {
                 var result = e.target.result;
-                deferred.resolve(result.value);
+                deferred.resolve(result);
             }
 
             ob.onerror = function (e) {
@@ -150,6 +158,32 @@ dbApp.factory('dbService', function($window, $q) {
         }
         return deferred.promise;
     };
+
+    var getMessageConversation = function(_ID) {
+        var deferred = $q.defer();
+
+        if(db === null) {
+            deferred.reject("IndexDB is not opened yet.");
+        }else {
+
+            var transaction = db.transaction(["messages"], "readonly");
+            var store = transaction.objectStore("messages");
+
+            var ob = store.get(_ID);
+
+            ob.onsuccess = function (e) {
+                var result = e.target.result;
+                console.log(result);
+                deferred.resolve(result.messageConversation);
+            }
+
+            ob.onerror = function (e) {
+                deferred.reject("Could not find message: " + _ID +".");
+            }
+        }
+        return deferred.promise;
+    };
+
 
     var addAllMessages = function(inputList) {
         //http://inf5750-30.uio.no/api/currentUser/inbox/messageConversations
@@ -304,7 +338,8 @@ dbApp.factory('dbService', function($window, $q) {
         getAllMessages: getAllMessages,
         deleteMessageByID: deleteMessageByID,
         deleteMessageByObject: deleteMessageByObject,
-        clearDatabase: clearDatabase
+        clearDatabase: clearDatabase,
+        getMessageConversation: getMessageConversation
     };
 });
 
