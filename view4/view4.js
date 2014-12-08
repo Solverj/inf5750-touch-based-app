@@ -20,7 +20,7 @@ angular.module('myApp.view4', ['ngRoute'])
 
     }]);
 
-function messageController($scope, $http,$route) {
+function messageController($scope, $http,$route, dbService) {
 
     $scope.messagrURL = dhi + "/api/messageConversations/" + $scope.messageId;
 
@@ -29,10 +29,21 @@ function messageController($scope, $http,$route) {
         url: $scope.messagrURL,
         contentType: 'application/json',
         async: false
-    }).success(function (result) {
-        $scope.subject = result.subject;
-        $scope.people = result.userMessages;
-        console.log($scope.people);
+    }).
+        success(function (result) {
+            $scope.subject = result.subject;
+            $scope.people = result.userMessages;
+            console.log($scope.people);
+    }).
+        error(function (result) {
+            /*Offline - use database*/
+
+            var id = $scope.messageId;
+            dbService.getMessageConversation(id).then(function (msg) {
+                console.log(id + msg);
+                $scope.subject = msg.subject;
+                $scope.people = msg.userMessages;
+            });
     });
 
     $http({
@@ -40,20 +51,38 @@ function messageController($scope, $http,$route) {
         url: $scope.messagrURL+'/messages',
         contentType: 'application/json',
         async: false
-        }).success(function (result) {
+        }).
+        success(function (result) {
+            $scope.replyText = "";
+            $scope.inboxList = [];
+            $scope.json = result;
+            //$scope.messageUserList = [];
+            $scope.messageThread = result.messages;
+            $scope.subject = result.subject;
+            $scope.people = result.userMessages;
+            for (var i = 0; i < result.messages.length; i++) {
+                $scope.inboxList.push({"id": result.messages[i]});
+            }
 
-        $scope.replyText = "";
-        $scope.inboxList = [];
-        $scope.json = result;
-        // $scope.messageUserList = [];
-        $scope.messageThread = result.messages;
-        $scope.subject = result.subject;
-        $scope.people = result.userMessages;
-        for (var i = 0; i < result.messages.length; i++) {
-            $scope.inboxList.push({"id": result.messages[i]});
-        }
+        }).
+        error(function () {
+        /*Offline - use database*/
+            var id = $scope.messageId;
+            dbService.getMessageConversation(id).then(function (msg) {
+                console.log(id + "," + msg);
+                $scope.replyText = " You're offline. Replying is disabled.";
+                $scope.inboxList = [];
+                $scope.json = msg;
+                $scope.messageUserList = [];
+                $scope.messageThread = msg.messages;
+                $scope.subject = msg.subject;
+                $scope.people = msg.userMessages;
 
-    });
+                for (var i = 0; i < msg.messages.length; i++) {
+                    $scope.inboxList.push({"id": msg.messageData[i]});
+                }
+            });
+        });
 
     $scope.mesageIdList=[];
     $scope.mesageIdList.push($scope.messageId);
