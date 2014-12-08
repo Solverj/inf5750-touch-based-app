@@ -19,18 +19,25 @@ view1App.controller('View1Ctrl', function($scope, $window, dbService, $http) {
     vm.user;
 
     vm.refreshList = function () {
-        dbService.getAllMessages().then(function (data) {
-            vm.todos = data;
-            $scope.messageList = vm.todos;
+        $http.get(dhi + '/api/currentUser/inbox/messageConversations').
+            success(function (response) {
+                $scope.messageList =  response;
+            }).
+            error(function (response) {
+                dbService.getAllMessages().then(function (data) {
+                    vm.todos = data;
+                    $scope.messageList = vm.todos;
 
-            $http.get(dhi + '/api/me')
-                .success(function (response) {
-                    $scope.me = response.name;
+                    $http.get(dhi + '/api/me')
+                        .success(function (response) {
+                            $scope.me = response.name;
+                        });
+
+                }, function (err) {
+                    console.log("Error in getting database data.");
                 });
+            });
 
-        }, function (err) {
-            console.log("Error in getting database data.");
-        });
     };
 
     function init() {
@@ -38,7 +45,25 @@ view1App.controller('View1Ctrl', function($scope, $window, dbService, $http) {
             //if this is success full we should "refresh" our database with the server.
             $http.get(dhi + '/api/currentUser/inbox/messageConversations').success(function (response) {
                 dbService.clearDatabase(response);
-                dbService.addAllMessages(response);
+                response.map(function(item) {
+                    var temp = $http.get(dhi + "/api/messageConversations/" + item.id);
+
+                        temp.success(function (conv) {
+                            $http.get(dhi + "/api/messageConversations/" + item.id + "/messages").
+                                success(function (messageData) {
+                                    dbService.addMessage(item, conv, messageData);
+                            }).
+                                error(function (response) {
+                                    dbService.addMessage(item, conv, null);
+                            });
+
+                        });
+                        temp.error = function() {
+                            dbService.addMessage(item, null, null);
+                        };
+
+                });
+                //dbService.addAllMessages(response);
             });
 
             //And then retrieve from the database. see above.
